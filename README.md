@@ -8,13 +8,18 @@
 export PATH="$HOME/Library/Python/3.9/bin:$PATH"
 ```
 
-## 실행
+## 설치
 
 ```bash
-cd stock_pilot_back
-PIPENV_VENV_IN_PROJECT=1 pipenv install
-PIPENV_VENV_IN_PROJECT=1 pipenv run python manage.py migrate
-PIPENV_VENV_IN_PROJECT=1 pipenv run python manage.py runserver
+pipenv install
+```
+
+## 실행
+
+
+```bash
+pipenv run python manage.py migrate
+pipenv run python manage.py runserver
 ```
 
 ## 기본 엔드포인트
