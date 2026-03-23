@@ -1,0 +1,14 @@
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+
+class HealthCheckView(APIView):
+    def get(self, request):
+        return Response(
+            {
+                "status": "ok",
+                "project": "stock_pilot_back",
+            }
+        )
+
+# Create your views here.
