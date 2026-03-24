@@ -3,19 +3,20 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.getenv(
     "DJANGO_SECRET_KEY",
     "django-insecure-dev-only-secret-key-change-me",
 )
-DEBUG = os.getenv("DJANGO_DEBUG", "True").lower() == "true"
+
 ALLOWED_HOSTS = [
     host.strip()
     for host in os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
     if host.strip()
 ]
+
 CORS_ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.getenv(
@@ -28,7 +29,7 @@ CORS_ALLOWED_ORIGINS = [
 INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
-    "api",
+    "apps.api",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,8 +40,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -48,12 +49,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "stock_pilot_back.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -66,7 +67,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "stock_pilot_back.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
@@ -89,14 +90,18 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
 LANGUAGE_CODE = "ko-kr"
 TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
-
 USE_TZ = True
+
 STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
